@@ -1,11 +1,33 @@
-import './App.css';
+import {getUsers} from './services/api';
+import {useEffect, useState} from 'react';
+import Users from './components/users/Users';
 
-function App() {
-  return (
-    <div className="App">
+export default function App() {
+    const [users, setUsers] = useState([]);
+    const [chosenUser, setChosenUser] = useState(null);
 
-    </div>
-  );
-}
+    useEffect(() => {
+        getUsers()
+            .then(responce => setUsers(responce))
+    }, [])
 
-export default App;
+    const showInfo = (usik) => {
+        setChosenUser(usik)
+    }
+
+    return (
+        <div>
+            <Users items={users} showInfo={showInfo}/>
+            <hr/>
+            {chosenUser &&
+            <div>
+                <div>PHONE: {chosenUser.phone}</div>
+                <div>PHONE: {chosenUser.phone}</div>
+                <div>PHONE: {chosenUser.phone}</div>
+            </div>
+            }
+        </div>
+    );
+};
+
+
